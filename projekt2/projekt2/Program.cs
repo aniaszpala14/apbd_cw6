@@ -1,3 +1,5 @@
+using projekt2.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +8,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
+
+//tunapraw
+builder.Services.AddTransient<IAnimalRepository, AnimalRepository>();
+builder.Services.AddSingleton<IAnimalRepository, AnimalRepository>(); //wazne!!!
+builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
+//dotad
 
 var app = builder.Build();
 app.Configuration.GetConnectionString("Default");
