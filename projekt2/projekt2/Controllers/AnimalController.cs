@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using projekt2.Models;
+using projekt2.Models.DTOs;
 
 namespace projekt2.Controllers;
 [ApiController]
@@ -17,7 +18,7 @@ public class AnimalController : Controller
  public IActionResult GetAnimals()
  {
   //Otwieramy polaczenie do bazy
-  SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("Default"));
+  using SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("Default"));
   connection.Open();
   //Definicja commanda
   using SqlCommand command = new SqlCommand();
@@ -41,4 +42,29 @@ public class AnimalController : Controller
   }
   return Ok(animals);
  }
+
+ [HttpPost]
+ public IActionResult AddAnimal(AddAnimal animal)
+ {
+  //Otwieramy polaczenie do bazy
+  using SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("Default"));
+  connection.Open();
+  //Definicja commanda
+  using SqlCommand command = new SqlCommand();
+  command.Connection = connection;
+  command.CommandText = "INSERT INTO Animal VALUES(@animalName,'','','')";
+  command.Parameters.AddWithValue("@animalName", animal.Name);
+
+  command.ExecuteNonQuery();
+
+
+
+  return Created("", null);
+ }
+ 
+ 
+ 
+ 
+ 
+ 
 }
