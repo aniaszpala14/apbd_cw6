@@ -16,17 +16,17 @@ public class AnimalController : Controller
   _animalRepository = animalRepository;
  }
  
- [HttpGet]
+ [HttpGet("getall")]
  public IActionResult GetAnimals(){
   var animals = _animalRepository.GetAnimals();
   return Ok(animals);
  }
- [HttpGet]
+ [HttpGet("orderby")]
  public IActionResult OrderBy(string ordercategory){
   var animals = _animalRepository.OrderBy(ordercategory);
   return Ok(animals);
  }
- [HttpGet]
+ [HttpGet("{id}")]
  public IActionResult GetAnimalById(int id){
   var animals = _animalRepository.GetAnimalById(id);
   return Ok(animals);

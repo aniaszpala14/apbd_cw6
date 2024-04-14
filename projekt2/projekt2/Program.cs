@@ -1,5 +1,4 @@
 using projekt2.Repositories;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,16 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
-
-
-//tunapraw
-builder.Services.AddTransient<IAnimalRepository, AnimalRepository>();
-builder.Services.AddSingleton<IAnimalRepository, AnimalRepository>(); //wazne!!!
 builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
-//dotad
 
 var app = builder.Build();
-app.Configuration.GetConnectionString("Default");
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -29,3 +22,5 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 app.Run();
+
+////"Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False"

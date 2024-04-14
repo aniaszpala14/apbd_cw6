@@ -8,7 +8,8 @@ public class AddAnimal
     [MinLength(3)]
     [Required]
     public string Name { get; set; }
-
     public string? Description{ get; set; } //? - daje opcje ze nullable
-    
+    public string Category { get; set; }
+    public string Area { get; set; }
+
 }
