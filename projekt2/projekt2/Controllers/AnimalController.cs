@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using projekt2.Models;
 using projekt2.Models.DTOs;
@@ -16,31 +17,36 @@ public class AnimalController : Controller
  }
  
  [HttpGet]
- public IActionResult GetAnimals()
- {
-  var animals = _animalRepository.GetAnimals();//tak powinno byc
-  
+ public IActionResult GetAnimals(){
+  var animals = _animalRepository.GetAnimals();
   return Ok(animals);
  }
-
+ [HttpGet]
+ public IActionResult OrderBy(string ordercategory){
+  var animals = _animalRepository.OrderBy(ordercategory);
+  return Ok(animals);
+ }
+ [HttpGet]
+ public IActionResult GetAnimalById(int id){
+  var animals = _animalRepository.GetAnimalById(id);
+  return Ok(animals);
+ }
  [HttpPost]
- public IActionResult AddAnimal(AddAnimal animal)
- {
-  // //Otwieramy polaczenie do bazy
-  // using SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("Default"));
-  // connection.Open();
-  // //Definicja commanda
-  // using SqlCommand command = new SqlCommand();
-  // command.Connection = connection;
-  // command.CommandText = "INSERT INTO Animal VALUES(@animalName,'','','')";
-  // command.Parameters.AddWithValue("@animalName", animal.Name);
-  //
-  // command.ExecuteNonQuery();
-
-
+ public IActionResult AddAnimal(AddAnimal animal){
 _animalRepository.AddAnimal(animal);
   return Created("", null);
  }
+ [HttpDelete]
+ public IActionResult DeleteAnimal(int id) {
+  _animalRepository.DeleteAnimal(id);
+  return  NoContent();
+ }
+ [HttpPut]
+ public IActionResult EditAnimal(int id,[FromBody]Animal animal){
+  var editedAnimal = _animalRepository.EditAnimal(id,animal);
+  return Ok(editedAnimal);
+ }
+ 
  
  
  
