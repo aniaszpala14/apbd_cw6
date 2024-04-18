@@ -26,13 +26,18 @@ public class AnimalRepository : IAnimalRepository
         var animals = new List<Animal>();
         int idAnimalOrdinal = reader.GetOrdinal("IdAnimal");
         int nameOrdinal = reader.GetOrdinal("Name");
-
+        int descriptionOrdinal = reader.GetOrdinal("Description");
+        int categoryOrdinal = reader.GetOrdinal("Category");
+        int areaOrdinal = reader.GetOrdinal("Area");
         while (reader.Read())
         {
             animals.Add(new Animal()
             {
                 IdAnimal = reader.GetInt32(idAnimalOrdinal),
-                Name = reader.GetString(nameOrdinal)
+                Name = reader.GetString(nameOrdinal),
+                Description = reader.GetString(descriptionOrdinal),
+                Category = reader.GetString(categoryOrdinal),
+                Area = reader.GetString(areaOrdinal)
             });
         }
 
@@ -83,8 +88,11 @@ public class AnimalRepository : IAnimalRepository
 
         using SqlCommand command = new SqlCommand();
         command.Connection = connection;
-        command.CommandText = "INSERT INTO Animal VALUES(@animalName, '', '', '')";
+        command.CommandText = "INSERT INTO Animal VALUES(@animalName, @animalDescription, @animalCategory, @animalArea)";
         command.Parameters.AddWithValue("@animalName", animal.Name);
+        command.Parameters.AddWithValue("@animalDescription", animal.Description);
+        command.Parameters.AddWithValue("@animalCategory", animal.Category);
+        command.Parameters.AddWithValue("@animalArea", animal.Area);
         command.ExecuteNonQuery();
     }
 
